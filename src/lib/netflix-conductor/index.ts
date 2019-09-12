@@ -7,7 +7,7 @@ export interface PollTask {
 }
 
 export enum TaskState {
-    scheduled= 'scheduled',
+    scheduled= 'SCHEDULED',
     inProgress = 'IN_PROGRESS',
     failed = 'FAILED',
     completed = 'COMPLETED',
