@@ -41,7 +41,7 @@ export default class ConductorWorker extends EventEmitter {
         return;
       }
       const input = pullTask.inputData.input;
-      const { workflowInstanceId, taskId } = pullTask
+      const { workflowInstanceId, taskId } = pullTask;
 
       // Ack the Task
       const {data: obj} = await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
@@ -86,23 +86,26 @@ export default class ConductorWorker extends EventEmitter {
 
     })();
   }
-  start(taskType: string, fn: WorkFunction, interval: number) {
+
+  start(taskType: string, fn: WorkFunction, interval: number = 1000) {
     this.working = true;
+    console.log(`Start worker: taskType = ${taskType}, poll-interval = ${interval}`);
     pForever(async () => {
       if (this.working) {
-        await sleep(interval || 1000);
-        return this.pollAndWork(taskType, fn).then(data => {
-          console.log(true)
-        }, (err) => {
-          console.log(err)
-        })
+        await sleep(interval);
+        return this.pollAndWork(taskType, fn)
+            .then(data => {
+            }, (err) => {
+              console.error(err)
+            })
       } else {
+        console.log(`End worker: taskType = ${taskType}`);
         return pForever.end
       }
     })
   }
 
-  stop(taskType: string, fn: WorkFunction) {
+  stop() {
     this.working = false
   }
 }
