@@ -5,20 +5,27 @@ import sleep from 'sleep-promise';
 import axios, {AxiosInstance} from 'axios';
 import {PollTask, TaskState, UpdatingTaskResult} from "./lib/netflix-conductor";
 
+export interface ConductorWorkerOptions {
+  url?: string;
+  apiPath?: string;
+  workerid?: string;
+}
+
 export type WorkFunction<Result = void> = (input: any) => Promise<Result>;
 
 export default class ConductorWorker extends EventEmitter {
   url: string;
   apiPath: string;
-  workerid: string;
+  workerid?: string;
   client: AxiosInstance;
   working: boolean = false;
 
-  constructor(options: {url: string, apiPath: string, workerid: string}) {
+  constructor(options: ConductorWorkerOptions = {}) {
     super();
-    this.url = options.url;
-    this.apiPath = options.apiPath;
-    this.workerid = options.workerid;
+    const {url = 'http://localhost:8080', apiPath = '/api', workerid = undefined} = options;
+    this.url = url;
+    this.apiPath = apiPath;
+    this.workerid = workerid;
 
     this.client = axios.create({
       baseURL: this.url,
