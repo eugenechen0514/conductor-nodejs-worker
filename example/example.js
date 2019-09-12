@@ -1,4 +1,4 @@
-const ConductorWorker = require('../build');
+const ConductorWorker = require('../build').default;
 
 const worker = new ConductorWorker({
     url: 'http://localhost:8080', // host
