@@ -19,8 +19,8 @@ const fn = (input) => {
     })
   }
 
-worker.Start(taskType, fn)
+worker.start(taskType, fn)
 
 setTimeout(()=>{
-  worker.Stop()
+  worker.stop()
 }, 10000)

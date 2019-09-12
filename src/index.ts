@@ -80,7 +80,7 @@ export default class ConductorWorker extends EventEmitter {
 
     })();
   }
-  Start(taskType: string, fn: WorkFunction, interval: number) {
+  start(taskType: string, fn: WorkFunction, interval: number) {
     this.working = true
     pForever(async () => {
       if (this.working) {
@@ -96,7 +96,7 @@ export default class ConductorWorker extends EventEmitter {
     })
   }
 
-  Stop(taskType: string, fn: WorkFunction) {
+  stop(taskType: string, fn: WorkFunction) {
     this.working = false
   }
 }
