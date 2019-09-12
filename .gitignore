@@ -58,7 +58,7 @@ typings/
 .env
 
 /bin
-/dist
+/dist/**/*.map
 /app
 /.idea
 /node_modules
