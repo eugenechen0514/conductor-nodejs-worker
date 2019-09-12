@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var TaskState;
 (function (TaskState) {
-    TaskState["scheduled"] = "scheduled";
+    TaskState["scheduled"] = "SCHEDULED";
     TaskState["inProgress"] = "IN_PROGRESS";
     TaskState["failed"] = "FAILED";
     TaskState["completed"] = "COMPLETED";
