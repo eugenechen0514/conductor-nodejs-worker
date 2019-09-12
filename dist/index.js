@@ -34,10 +34,10 @@ class ConductorWorker extends events_1.EventEmitter {
         return (() => __awaiter(this, void 0, void 0, function* () {
             // Poll for Worker task
             const { data: pullTask } = yield this.client.get(`${this.apiPath}/tasks/poll/${taskType}?workerid=${this.workerid}`);
-            if (!pullTask || !pullTask.inputData) {
+            if (!pullTask) {
                 return;
             }
-            const input = pullTask.inputData.input;
+            const input = pullTask.inputData;
             const { workflowInstanceId, taskId } = pullTask;
             // Ack the Task
             const { data: obj } = yield this.client.post(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
