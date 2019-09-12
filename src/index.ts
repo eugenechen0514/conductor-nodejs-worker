@@ -37,10 +37,10 @@ export default class ConductorWorker extends EventEmitter {
     return (async () => {
       // Poll for Worker task
       const {data: pullTask} = await this.client.get<PollTask | void>(`${this.apiPath}/tasks/poll/${taskType}?workerid=${this.workerid}`);
-      if (!pullTask || !pullTask.inputData) {
+      if (!pullTask) {
         return;
       }
-      const input = pullTask.inputData.input;
+      const input = pullTask.inputData;
       const { workflowInstanceId, taskId } = pullTask;
 
       // Ack the Task
