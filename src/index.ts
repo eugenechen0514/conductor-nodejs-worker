@@ -3,11 +3,9 @@ import pForever from 'p-forever';
 import sleep from 'sleep-promise';
 
 import axios, {AxiosInstance} from 'axios';
-import {PollTask, TaskState} from "./lib/netflix-conductor";
+import {PollTask, TaskState, UpdatingTaskResult} from "./lib/netflix-conductor";
 
 export type WorkFunction<Result = void> = (input: any) => Promise<Result>;
-
-
 
 export default class ConductorWorker extends EventEmitter {
   url: string;
@@ -45,7 +43,7 @@ export default class ConductorWorker extends EventEmitter {
       }
 
       const t1 = Date.now();
-      const baseTaskInfo = {
+      const baseTaskInfo: UpdatingTaskResult = {
         workflowInstanceId,
         taskId,
       };
@@ -53,22 +51,20 @@ export default class ConductorWorker extends EventEmitter {
       // Working
       return fn(input)
           .then(output => {
-            const updateTaskInfo = {
+            return {
               ...baseTaskInfo,
-              callbackAfterSeconds: (Date.now() - t1)/1000,
+              callbackAfterSeconds: (Date.now() - t1) / 1000,
               outputData: output,
               status: TaskState.completed,
             };
-            return updateTaskInfo;
           })
           .catch((err) => {
-            const updateTaskInfo = {
+            return {
               ...baseTaskInfo,
-              callbackAfterSeconds: (Date.now() - t1)/1000,
+              callbackAfterSeconds: (Date.now() - t1) / 1000,
               reasonForIncompletion: err, // If failed, reason for failure
               status: TaskState.failed,
             };
-            return updateTaskInfo;
           })
           .then(updateTaskInfo => {
             // Return response, add logs
@@ -84,10 +80,10 @@ export default class ConductorWorker extends EventEmitter {
     })();
   }
   start(taskType: string, fn: WorkFunction, interval: number) {
-    this.working = true
+    this.working = true;
     pForever(async () => {
       if (this.working) {
-        await sleep(interval || 1000)
+        await sleep(interval || 1000);
         return this.pollAndWork(taskType, fn).then(data => {
           console.log(true)
         }, (err) => {

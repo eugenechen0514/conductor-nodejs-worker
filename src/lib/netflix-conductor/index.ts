@@ -13,3 +13,12 @@ export enum TaskState {
     completed = 'COMPLETED',
     cancelled = 'CANCELLED',
 }
+
+export interface UpdatingTaskResult {
+    workflowInstanceId: string;
+    taskId: string;
+    reasonForIncompletion?: string;
+    callbackAfterSeconds?: number,
+    status?: TaskState.inProgress | TaskState.completed | TaskState.failed,
+    outputData?: any;
+}
