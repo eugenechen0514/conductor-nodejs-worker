@@ -22,13 +22,16 @@ export default class ConductorWorker extends EventEmitter {
     this.apiPath = options.apiPath;
     this.workerid = options.workerid;
 
-    this.client = axios.create({baseURL: this.url});
+    this.client = axios.create({
+      baseURL: this.url,
+      responseType: 'json',
+    });
   }
 
   pollAndWork(taskType: string, fn: WorkFunction) { // keep 'function'
     return (async () => {
       // Poll for Worker task
-      const pullTask: PollTask = await this.client.get(`${this.apiPath}/tasks/poll/${taskType}?workerid=${this.workerid}`);
+      const {data: pullTask} = await this.client.get<PollTask | void>(`${this.apiPath}/tasks/poll/${taskType}?workerid=${this.workerid}`);
       if (!pullTask || !pullTask.inputData) {
         return;
       }
@@ -36,7 +39,7 @@ export default class ConductorWorker extends EventEmitter {
       const { workflowInstanceId, taskId } = pullTask
 
       // Ack the Task
-      const obj: boolean = await this.client.post(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
+      const {data: obj} = await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
       if (obj !== true) {
         return;
       }
