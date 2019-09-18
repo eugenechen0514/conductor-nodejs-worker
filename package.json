@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^12.7.5",
     "@types/p-forever": "^2.0.0",
+    "chai": "^4.2.0",
     "typescript": "^3.6.3"
   }
 }
