@@ -24,7 +24,7 @@
   "homepage": "https://github.com/chinajuanbob/conductor-nodejs-worker",
   "dependencies": {
     "axios": "^0.19.0",
-    "netflix-conductor-utilities": "^0.1.2",
+    "netflix-conductor-utilities": "^0.1.3",
     "p-forever": "^2.1.0",
     "sleep-promise": "^8.0.1"
   },
