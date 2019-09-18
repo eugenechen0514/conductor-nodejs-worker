@@ -3,7 +3,7 @@ import pForever from 'p-forever';
 import sleep from 'sleep-promise';
 
 import axios, {AxiosInstance} from 'axios';
-import {PollTask, TaskState, UpdatingTaskResult} from "./lib/netflix-conductor";
+import {PollTask, TaskState, UpdatingTaskResult} from "netflix-conductor-utilities";
 
 export interface ConductorWorkerOptions {
   url?: string;

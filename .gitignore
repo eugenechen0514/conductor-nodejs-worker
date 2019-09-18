@@ -64,3 +64,5 @@ typings/
 /node_modules
 /trash
 build
+
+.DS_Store
