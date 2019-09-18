@@ -16,7 +16,7 @@ const events_1 = require("events");
 const p_forever_1 = __importDefault(require("p-forever"));
 const sleep_promise_1 = __importDefault(require("sleep-promise"));
 const axios_1 = __importDefault(require("axios"));
-const netflix_conductor_1 = require("./lib/netflix-conductor");
+const netflix_conductor_utilities_1 = require("netflix-conductor-utilities");
 class ConductorWorker extends events_1.EventEmitter {
     constructor(options = {}) {
         super();
@@ -52,10 +52,10 @@ class ConductorWorker extends events_1.EventEmitter {
             // Working
             return fn(input)
                 .then(output => {
-                return Object.assign(Object.assign({}, baseTaskInfo), { callbackAfterSeconds: (Date.now() - t1) / 1000, outputData: output, status: netflix_conductor_1.TaskState.completed });
+                return Object.assign(Object.assign({}, baseTaskInfo), { callbackAfterSeconds: (Date.now() - t1) / 1000, outputData: output, status: netflix_conductor_utilities_1.TaskState.completed });
             })
                 .catch((err) => {
-                return Object.assign(Object.assign({}, baseTaskInfo), { callbackAfterSeconds: (Date.now() - t1) / 1000, reasonForIncompletion: err, status: netflix_conductor_1.TaskState.failed });
+                return Object.assign(Object.assign({}, baseTaskInfo), { callbackAfterSeconds: (Date.now() - t1) / 1000, reasonForIncompletion: err, status: netflix_conductor_utilities_1.TaskState.failed });
             })
                 .then(updateTaskInfo => {
                 // Return response, add logs
