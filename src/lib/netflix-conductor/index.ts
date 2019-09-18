@@ -1,5 +1,3 @@
-export interface TaskDefinition {
-    present: boolean;
 
 export enum TaskTimeoutPolicyEnum {
     retry = 'RETRY',
@@ -279,3 +277,10 @@ export interface UpdatingTaskResult {
     status?: TaskState.inProgress | TaskState.completed | TaskState.failed,
     outputData?: any;
 }
+
+export interface  ConductorSDKOptions {
+    apiEndpoint?: string;
+}
+
+export * from './TaskMetadataManager';
+export * from './WorkflowMetadataManager';
