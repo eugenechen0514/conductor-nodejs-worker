@@ -1,19 +1,33 @@
 export interface TaskDefinition {
     present: boolean;
+
+export enum TaskTimeoutPolicyEnum {
+    retry = 'RETRY',
+    timeOutWF = 'TIME_OUT_WF',
+    alertOnly = 'ALERT_ONLY',
+}
+
+export enum TaskRetryLogicEnum {
+    fixed = 'FIXED',
+    exponentialBackoff = 'EXPONENTIAL_BACKOFF',
 }
 
 export interface TaskDefinition {
-    "createTime": number,
-    "name": string,
-    "retryCount": number,
-    "timeoutSeconds": number,
-    "inputKeys"?: string[],
-    "timeoutPolicy": string, // ex: "TIME_OUT_WF"
-    "retryLogic": string, // ex: "FIXED"
-    "retryDelaySeconds": number,
-    "responseTimeoutSeconds": number,
-    "rateLimitPerFrequency": number,
-    "rateLimitFrequencyInSeconds": number
+    createTime?: number,
+    name: string,
+    description?: string,
+    retryCount?: number,
+    timeoutSeconds?: number,
+    inputKeys?: string[],
+    outputKeys?: string[],
+    inputTemplate?: any,
+    timeoutPolicy?: TaskTimeoutPolicyEnum,
+    retryLogic?: TaskRetryLogicEnum,
+    retryDelaySeconds?: number,
+    responseTimeoutSeconds?: number,
+    rateLimitPerFrequency?: number,
+    rateLimitFrequencyInSeconds?: number
+    concurrentExecLimit?: number,
 }
 
 export interface WorkflowTask {
