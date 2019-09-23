@@ -1,6 +1,6 @@
 {
   "name": "conductor-nodejs-worker",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "a simple worker for Netflix conductor server",
   "main": "dist/index.js",
   "types": "types/main.d.ts",
